@@ -6,6 +6,8 @@ require 'app/zmachine.rb'
 
 def tick args
   # Unit Test Story File
+  # You can find the source in the appendix section "Testing compliance", it's Czech
+  # https://inform-fiction.org/zmachine/standards/z1point1/appc.html
   #   Uncomment section below and compare the output to czech.out3
 
   # args.state.zmachine ||= ZMachine.new args, 'app/czech.z3'
