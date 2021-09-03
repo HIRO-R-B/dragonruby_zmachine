@@ -976,7 +976,6 @@ module ZInstructions
 
     @screen.set_status_line *status_line_values
     input = (@screen.prompt_input max_letters).downcase
-    @screen.ret
 
     (input.bytes + [0]).each_with_index { |byte, i| write_byte (text_buffer + 1 + i), byte }
 
