@@ -281,6 +281,7 @@ module ZInstructions
       179 => :_print_ret,
       181 => :_save,
       182 => :_restore,
+      183 => :_restart,
       184 => :_ret_popped,
       185 => :_pop,
       186 => :_quit,
@@ -416,6 +417,8 @@ module ZInstructions
   #
   def _clear_attr # clear_attr object attribute
     obj_id, attribute = @operands
+
+    raise "clear_attr on obj 0" if obj_id == 0
 
     (zobj obj_id).clear_attribute attribute
   end
@@ -819,13 +822,22 @@ module ZInstructions
       success = 1
     else
       @pc = pc
-      $gtk.notify_subdued! 
+      $gtk.notify_subdued!
 
       @screen.println 'Restore Failed'
       success = 0
     end
 
     branch success
+  end
+
+  #183
+  # Restart the game. (Any "Are you sure?" question must be asked by the game, not the interpreter.) The only pieces of information surviving from the previous state are the "transcribing to printer" bit (bit 0 of 'Flags 2' in the header, at address $10) and the "use fixed pitch font" bit (bit 1 of 'Flags 2').
+  # In particular, changing the program start address before a restart will not have the effect of restarting from this new address.
+  #
+  def _restart # restart
+    # those bits should be unchanged so just restart
+    $gtk.reset
   end
 
   #184
