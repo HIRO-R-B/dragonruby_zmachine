@@ -818,13 +818,11 @@ module ZInstructions
     data = $gtk.read_file 'app/save.data'
     if data
       @memory = data.bytes
-      @screen.println 'Game Restored'
+      $gtk.notify! 'Game Restored', 60
       success = 1
     else
       @pc = pc
-      $gtk.notify_subdued!
-
-      @screen.println 'Restore Failed'
+      $gtk.notify! 'Restore Failed', 60
       success = 0
     end
 

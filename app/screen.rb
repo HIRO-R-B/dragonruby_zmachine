@@ -206,7 +206,7 @@ class Screen
       # Delete
       hold = kh.backspace
       if pos > 0 && (kd.backspace || (hold && hold.elapsed?(15)))
-        @lines[0].slice! pos
+        @lines[0].slice! @cursor_pos - 1
         input.slice! pos - 1
         cursor_back
       end
@@ -216,7 +216,7 @@ class Screen
       next unless char
       if input.length < max_letters
         if 31 < char.ord && char.ord < 127
-          @lines[0].insert pos + 1, char
+          @lines[0].insert @cursor_pos, char
           input.insert pos, char
           cursor_forward
         end
